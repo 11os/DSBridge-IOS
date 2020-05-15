@@ -25,11 +25,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         id wv;
-        if ([[UIDevice currentDevice].systemVersion floatValue] >=8.0) {
-            wv=[[DWKwebview alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-        }else{
-            wv=[[DUIwebview alloc] initWithFrame:frame];
-        }
+        wv=[[DWKwebview alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         [self addSubview:wv];
         webview=wv;
     }
@@ -43,85 +39,49 @@
 
 - (void)loadRequest:(NSURLRequest *)request
 {
-    if([webview isKindOfClass:[DUIwebview class]]){
-        [(DUIwebview *)webview loadRequest:request];
-    }else{
-        [(DWKwebview *)webview loadRequest:request];
-    }
+    [(DWKwebview *)webview loadRequest:request];
 }
 
 
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL
 {
-    if([webview isKindOfClass:[DUIwebview class]]){
-        [(DUIwebview *)webview loadHTMLString:string baseURL:baseURL];
-    }else{
-        [(DWKwebview *)webview loadHTMLString:string baseURL:baseURL];
-    }
+    [(DWKwebview *)webview loadHTMLString:string baseURL:baseURL];
 }
 
 - (void)loadData:(NSData *)data MIMEType:(NSString *)MIMEType textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL
 {
-    if([webview isKindOfClass:[DUIwebview class]]){
-        [(DUIwebview *)webview loadData:data MIMEType:MIMEType textEncodingName:textEncodingName baseURL:baseURL];
-    }else{
-        [(DWKwebview *)webview loadData:data MIMEType:MIMEType characterEncodingName:textEncodingName baseURL:baseURL];
-    }
+    [(DWKwebview *)webview loadData:data MIMEType:MIMEType characterEncodingName:textEncodingName baseURL:baseURL];
 }
 
 -(BOOL)canGoBack
 {
-    if([webview isKindOfClass:[DUIwebview class]]){
-        return ((DUIwebview *)webview).canGoBack;
-    }else{
-        return ((DWKwebview *)webview).canGoBack;
-    }
+    return ((DWKwebview *)webview).canGoBack;
 }
 
 -(BOOL)canGoForward
 {
-    if([webview isKindOfClass:[DUIwebview class]]){
-        return ((DUIwebview *)webview).canGoForward;
-    }else{
-        return ((DWKwebview *)webview).canGoForward;
-    }
+    return ((DWKwebview *)webview).canGoForward;
 }
 
 -(BOOL)isLoading
 {
-    if([webview isKindOfClass:[DUIwebview class]]){
-        return ((DUIwebview *)webview).isLoading;
-    }else{
-        return ((DWKwebview *)webview).isLoading;
-    }
+    return ((DWKwebview *)webview).isLoading;
 }
 
 -(void)reload
 {
-    if([webview isKindOfClass:[DUIwebview class]]){
-        [(DUIwebview *)webview reload];
-    }else{
-        [(DWKwebview *)webview reload];
-    }
+    [(DWKwebview *)webview reload];
 }
 
 - (void)stopLoading
 {
-    if([webview isKindOfClass:[DUIwebview class]]){
-        [(DUIwebview *)webview stopLoading];
-    }else{
-        [(DWKwebview *)webview stopLoading];
-    }
+    [(DWKwebview *)webview stopLoading];
 }
 
 -(void)setJavascriptInterfaceObject:(id)jsib
 {
-    if([webview isKindOfClass:[DUIwebview class]]){
-        ((DUIwebview *)webview).JavascriptInterfaceObject=jsib;
-    }else{
-        ((DWKwebview *)webview).JavascriptInterfaceObject=jsib;
-    }
+    ((DWKwebview *)webview).JavascriptInterfaceObject=jsib;
 }
 
 - (void)loadUrl: (NSString *)url
@@ -132,38 +92,23 @@
 
 - (void)setJavascriptContextInitedListener:(void (^)(void))callback
 {
-    if([webview isKindOfClass:[DUIwebview class]]){
-        [(DUIwebview *)webview setJavascriptContextInitedListener:callback];
-    }else{
-        [(DWKwebview *)webview setJavascriptContextInitedListener:callback];
-    }
-    
+    [(DWKwebview *)webview setJavascriptContextInitedListener:callback];
 }
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(NSString *))completionHandler
 {
-    if([webview isKindOfClass:[DUIwebview class]]){
-        [(DUIwebview *)webview  evaluateJavaScript:javaScriptString completionHandler:^(NSString * result){
-            if(completionHandler) completionHandler(result);
-        }];
-    }else{
-        [(DWKwebview *)webview evaluateJavaScript:javaScriptString completionHandler:^(NSString * result, NSError * error){
-            if(error){
-                NSLog(@"WKwebview exec js error: %@",error);
-            }
-            if(!result) result=@"";
-            if(completionHandler ) completionHandler(error?nil:result);
-        }];
-    }
+    [(DWKwebview *)webview evaluateJavaScript:javaScriptString completionHandler:^(NSString * result, NSError * error){
+        if(error){
+            NSLog(@"WKwebview exec js error: %@",error);
+        }
+        if(!result) result=@"";
+        if(completionHandler ) completionHandler(error?nil:result);
+    }];
 }
 
 -(void)callHandler:(NSString *)methodName arguments:(NSArray *)args completionHandler:(void (^)(NSString * _Nullable))completionHandler
 {
-    if([webview isKindOfClass:[DUIwebview class]]){
-        [(DUIwebview *)webview callHandler:methodName arguments:args completionHandler:completionHandler];
-    }else{
-        [(DWKwebview *)webview callHandler:methodName arguments:args completionHandler:completionHandler];
-    }
+    [(DWKwebview *)webview callHandler:methodName arguments:args completionHandler:completionHandler];
 }
 
 
@@ -213,8 +158,7 @@
         [[NSFileManager defaultManager] removeItemAtPath:webKitFolderInCachesfs error:&error];
         NSString *cookiesFolderPath = [libraryDir stringByAppendingString:@"/Cookies"];
         [[NSFileManager defaultManager] removeItemAtPath:cookiesFolderPath error:&error];
-    }
-    
+    }   
 }
 
 @end

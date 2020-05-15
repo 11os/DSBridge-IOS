@@ -49,9 +49,7 @@ bool g_ds_have_pending=false;
                            del=[@"delete window." stringByAppendingString:cb];
                         }
                         NSString*js=[NSString stringWithFormat:@"try {%@(decodeURIComponent(\"%@\"));%@; } catch(e){};",cb,(value == nil) ? @"" : value,del];
-                        if([jscontext isKindOfClass:JSContext.class]){
-                            [jscontext evaluateScript:js ];
-                        }else if([jscontext isKindOfClass:WKWebView.class]){
+                        if([jscontext isKindOfClass:WKWebView.class]){
                             @synchronized(jscontext)
                             {
                                 UInt64  t=[[NSDate date] timeIntervalSince1970]*1000;
@@ -88,9 +86,7 @@ bool g_ds_have_pending=false;
             }
             NSString*js=[error stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
             js=[NSString stringWithFormat:@"window.alert(decodeURIComponent(\"%@\"));",js];
-            if([jscontext isKindOfClass:JSContext.class]){
-                [jscontext evaluateScript:js ];
-            }else if([jscontext isKindOfClass:WKWebView.class]){
+            if([jscontext isKindOfClass:WKWebView.class]){
                 [(WKWebView *)jscontext evaluateJavaScript :js completionHandler:nil];
             }
             NSLog(@"%@",error);
