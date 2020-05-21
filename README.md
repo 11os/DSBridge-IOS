@@ -159,11 +159,7 @@ __block DWebview * _webview=webview;
 
 ### More about DWebview
 
-There are three webviews available, DWKwebview、DUIwebview and DWebview， all of them provide the same interface, you can user any one you want.  It is worth mentioning that the  DWebview is just a proxy of DWKwebview and DUIwebview, while the ios system vesion >=8.0 ,  DWKwebview will be used, otherwise, DUIwebview will be.
-
 ### Warnnig
-
- If you're using DUIwebview, don't set the delegate prop. because the delegate prop has been setted inner ,  please  set WebEventDelegate  instead ! 
 
 ### Alert/confirm/prompt
 
